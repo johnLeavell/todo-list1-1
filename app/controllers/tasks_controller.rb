@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :force_user_sign_in
+
   def index
     matching_tasks = Task.all
 
@@ -41,9 +43,9 @@ class TasksController < ApplicationController
 
     if the_task.valid?
       the_task.save
-      redirect_to("/tasks/#{the_task.id}", { :notice => "Task updated successfully."} )
+      redirect_to("/tasks", { :notice => "Task updated successfully."} )
     else
-      redirect_to("/tasks/#{the_task.id}", { :alert => the_task.errors.full_messages.to_sentence })
+      redirect_to("/tasks", { :alert => the_task.errors.full_messages.to_sentence })
     end
   end
 
